@@ -104,11 +104,38 @@ textarea{min-height:88px;resize:vertical}
  .next-steps{grid-template-columns:1fr}
 }
 
+
+.reviews-section{background:#fff}
+.review-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:30px}
+.review-card{background:#faf8fb;border:1px solid #e6dce9;border-radius:18px;padding:22px;box-shadow:0 8px 25px rgba(77,26,100,.06)}
+.review-stars{color:#f4c400;font-size:19px;letter-spacing:2px;margin-bottom:10px}
+.review-card p{color:#555;font-size:14px;line-height:1.65;margin:0 0 16px}
+.review-name{font-weight:1000;color:#211a24}
+.verified{font-size:11px;color:#6d20a8;font-weight:900;margin-top:3px}
+.review-note{font-size:11px;color:#888;margin-top:18px}
+@media(max-width:850px){.review-grid{grid-template-columns:1fr}}
+
+
+
+.review-strip{background:#fff;border-bottom:1px solid #eee;height:42px;display:flex;align-items:center;overflow:hidden;white-space:nowrap;position:relative}
+.review-track{display:flex;align-items:center;width:max-content;animation:reviewMarquee 65s linear infinite}
+.review-item{display:inline-flex;align-items:center;padding:0 28px;font-size:12px;color:#333;font-weight:700}
+.review-item .stars{color:#f4c400;letter-spacing:1px;font-weight:1000;margin-right:7px}
+.review-item .label{font-size:10px;font-weight:1000;color:#6d20a8;margin-right:7px}
+.review-item .author{color:#6d20a8;font-weight:900;margin-left:6px}
+@keyframes reviewMarquee{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+.review-strip{overflow:hidden}
+
+
 </style>
 </head>
 <body>
 
 <div class="top">🚚 CASH ON DELIVERY &nbsp; • &nbsp; <b>FAST DELIVERY</b> &nbsp; • &nbsp; EASY ORDER PROCESS</div>
+
+<div class="review-strip" id="reviewStrip">
+  <div class="review-track" id="reviewTrack"></div>
+</div>
 <div class="offer">✨ SPECIAL OFFER — FINISHING TOUCH HAIR REMOVER</div>
 
 <header class="hero">
@@ -169,7 +196,6 @@ textarea{min-height:88px;resize:vertical}
 </div>
 <div class="formRow">
 <div class="field"><label>CITY *</label><input id="city" required placeholder="Your city"></div>
-<div class="field"><label>QUANTITY *</label><select id="qty"><option value="1">1 × Hair Remover</option><option value="2">2 × Hair Removers</option><option value="3">3 × Hair Removers</option><option value="4">4 × Hair Removers</option><option value="5">5 × Hair Removers</option></select></div>
 </div>
 <div class="field"><label>COMPLETE ADDRESS *</label><textarea id="address" required placeholder="House / Street / Area"></textarea></div>
 <div class="field"><label>NEAREST PLACE / LANDMARK *</label><input id="near" required placeholder="Market, Masjid, School, Chowk"></div>
@@ -186,6 +212,28 @@ textarea{min-height:88px;resize:vertical}
 <section class="section alt">
 <div class="container center"><div class="kicker">EASY ORDERING</div><h2>Order in just a few steps.</h2><p class="intro">Click Order Now, enter your delivery details and confirm your Cash on Delivery order.</p></div>
 </section>
+
+
+
+<section class="section reviews-section">
+<div class="container">
+  <div class="center">
+    <div class="kicker">CUSTOMER REVIEWS</div>
+    <h2>What customers say</h2>
+    <p class="intro">Customer feedback from shoppers who have tried the product.</p>
+  </div>
+  <div class="review-grid">
+    <div class="review-card"><div class="review-stars">★★★★★</div><p>“Very easy to use and the compact design is convenient for keeping at home or taking while travelling.”</p><div class="review-name">Ayesha K.</div><div class="verified">✓ Customer Review</div></div>
+    <div class="review-card"><div class="review-stars">★★★★★</div><p>“I like that it comes with different attachments. The rechargeable feature also makes it convenient.”</p><div class="review-name">Sana M.</div><div class="verified">✓ Customer Review</div></div>
+    <div class="review-card"><div class="review-stars">★★★★★</div><p>“Simple design, easy controls and useful for my regular grooming routine.”</p><div class="review-name">Hira R.</div><div class="verified">✓ Customer Review</div></div>
+    <div class="review-card"><div class="review-stars">★★★★★</div><p>“The device is lightweight and easy to keep in my beauty kit.”</p><div class="review-name">Maham S.</div><div class="verified">✓ Customer Review</div></div>
+    <div class="review-card"><div class="review-stars">★★★★★</div><p>“The multiple heads are useful and the rechargeable setup is simple.”</p><div class="review-name">Fatima A.</div><div class="verified">✓ Customer Review</div></div>
+    <div class="review-card"><div class="review-stars">★★★★★</div><p>“Good for my regular grooming routine and easy to handle.”</p><div class="review-name">Zainab R.</div><div class="verified">✓ Customer Review</div></div>
+  </div>
+  <div class="center review-note">Customer reviews shown here are sample placeholders until you replace them with verified reviews from your customers.</div>
+</div>
+</section>
+
 
 <footer class="footer">© Finishing Touch Hair Remover • Cash on Delivery • All Rights Reserved</footer>
 
@@ -245,11 +293,10 @@ textarea{min-height:88px;resize:vertical}
 </div>
 
 <script>
-const PRICE=1799, DELIVERY=200;
-const qty=document.getElementById('qty'), productTotal=document.getElementById('productTotal'), grandTotal=document.getElementById('grandTotal');
+const PRICE=1799, DELIVERY=200, QTY=1;
+const productTotal=document.getElementById('productTotal'), grandTotal=document.getElementById('grandTotal');
 function money(n){return 'Rs. '+n.toLocaleString('en-PK')}
-function updateTotal(){const q=Number(qty.value);productTotal.textContent=money(PRICE*q);grandTotal.textContent=money(PRICE*q+DELIVERY)}
-qty.addEventListener('change',updateTotal);
+function updateTotal(){productTotal.textContent=money(PRICE);grandTotal.textContent=money(PRICE+DELIVERY)}
 
 document.querySelectorAll('a[href="#order"]').forEach(a=>a.addEventListener('click',e=>{
  e.preventDefault();
@@ -262,7 +309,7 @@ document.getElementById('orderClose').addEventListener('click',()=>{
 
 document.getElementById('orderForm').addEventListener('submit',e=>{
  e.preventDefault();
- const q=Number(qty.value), name=document.getElementById('name').value.trim(), phone=document.getElementById('phone').value.trim(),
+ const q=QTY, name=document.getElementById('name').value.trim(), phone=document.getElementById('phone').value.trim(),
  city=document.getElementById('city').value.trim(), address=document.getElementById('address').value.trim(), near=document.getElementById('near').value.trim();
  const no='FT'+Math.floor(100000+Math.random()*900000), product=PRICE*q, total=product+DELIVERY;
  document.getElementById('orderNo').innerHTML='<b>Order #'+no+'</b>';
@@ -283,6 +330,29 @@ document.getElementById('continue').addEventListener('click',()=>{
  document.body.style.overflow='';
  window.scrollTo({top:0,behavior:'smooth'});
 });
+
+const headerReviews = [
+  {text:"Very easy to use and the compact design is convenient for keeping at home or taking while travelling.", author:"Ayesha K."},
+  {text:"I like that it comes with different attachments. The rechargeable feature also makes it convenient.", author:"Sana M."},
+  {text:"Simple design, easy controls and useful for my regular grooming routine.", author:"Hira R."},
+  {text:"The device is lightweight and easy to keep in my beauty kit.", author:"Maham S."},
+  {text:"The multiple heads are useful and the rechargeable setup is simple.", author:"Fatima A."},
+  {text:"Good for my regular grooming routine and easy to handle.", author:"Zainab R."}
+];
+
+function reviewItems(items) {
+  return items.map(item => `
+    <span class="review-item">
+      <span class="stars">★★★★★</span>
+      <span class="label">CUSTOMER REVIEW:</span>
+      <span>${item.text}</span>
+      <span class="author">— ${item.author}</span>
+    </span>
+  `).join('');
+}
+const reviewTrack = document.getElementById('reviewTrack');
+reviewTrack.innerHTML = reviewItems(headerReviews) + reviewItems(headerReviews);
+
 </script>
 </body>
 </html>
